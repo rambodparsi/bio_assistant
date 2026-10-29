@@ -1,0 +1,7 @@
+# Pinned versions (tested together, Oct 2026). Install with: pip install -r requirements.txt
+google-genai==2.33.0
+gradio==6.31.0
+huggingface_hub==2.3.0
+numpy==2.5.4
+python-dotenv==1.2.4
+PyYAML==6.0.3

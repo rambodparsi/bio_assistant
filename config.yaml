@@ -1,0 +1,48 @@
+# =====================================================================
+# Bio Assistant settings.
+# Replace every value in [SQUARE BRACKETS] with your own text.
+# (The setup check refuses to run while any [ ... ] placeholder is left.)
+# This file is committed to the PUBLIC GitHub repo, so put nothing secret here.
+# =====================================================================
+
+# ---------- About you ----------
+owner_full_name: "[YOUR FULL NAME]"            # e.g. "Jane Doe"
+owner_first_name: "[YOUR FIRST NAME]"          # e.g. "Jane" - used as "Jane has worked on..."
+owner_title_or_field: "[YOUR TITLE OR FIELD]"  # e.g. "PhD researcher in computational biology"
+
+# ---------- The chat window ----------
+assistant_name: "Research Assistant"           # shown as the page title
+
+# First message visitors see. Markdown is allowed.
+welcome_message: "[WELCOME MESSAGE, e.g. Hello! I can answer questions about Jane's research, education and projects.]"
+
+# 3-4 clickable example questions shown under the chat box.
+example_questions:
+  - "[EXAMPLE QUESTION 1, e.g. What is Jane's educational background?]"
+  - "[EXAMPLE QUESTION 2, e.g. What are Jane's main research topics?]"
+  - "[EXAMPLE QUESTION 3, e.g. What is Jane working on now?]"
+  - "[EXAMPLE QUESTION 4, e.g. What are Jane's personal interests?]"
+
+# Reply used when no document matches the question well enough
+# (the model is not even called in that case). {owner_first_name} is filled in automatically.
+no_answer_message: "I'm sorry, I don't have access to that information. This assistant is intended only to answer questions about {owner_first_name}'s background and work."
+
+# ---------- Google Gemini models ----------
+# Checked against the google-genai SDK (v2.33.0) and Google's model listings, Oct 2026.
+# If Google retires a model, change the name here - no code changes needed.
+chat_model: "gemini-3.8-flash"
+embedding_model: "gemini-embedding-2"
+embedding_dimensions: 768     # smaller = smaller index; 768 is plenty for a personal site
+use_task_types: true          # use RETRIEVAL_DOCUMENT / RETRIEVAL_QUERY embedding task types
+
+# ---------- Private Hugging Face Dataset ----------
+# Where your documents and index are stored (PRIVATE). Format: username/dataset-name
+hf_dataset_repo: "Rambodparsi/[DATASET-NAME]"   # e.g. "Rambodparsi/bio-assistant-data"
+
+# ---------- Retrieval & answering ----------
+chunk_size: 1200            # max characters per chunk (~200 words)
+chunk_overlap: 200          # characters repeated between neighbouring chunks
+top_k: 6                    # how many chunks to send to the model per question
+similarity_threshold: 0.45  # 0-1; chunks scoring below this are ignored. Raise = stricter.
+temperature: 0.2            # low = factual and consistent
+max_history_turns: 3        # how many previous question/answer pairs the model sees
