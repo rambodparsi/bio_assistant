@@ -1,0 +1,23 @@
+# Render Blueprint - deploys the chat app as a FREE Render web service.
+# In Render: New + -> Blueprint -> pick this GitHub repo. See README "Deploying to Render".
+# Secret values are NOT stored here: Render asks you for them (sync: false).
+services:
+  - type: web
+    name: bio-assistant
+    runtime: python
+    plan: free
+    buildCommand: pip install -r requirements.txt
+    startCommand: python app.py
+    healthCheckPath: /
+    envVars:
+      - key: PYTHON_VERSION
+        value: "3.13"
+      # Gradio must listen on all interfaces and on the port Render provides ($PORT = 10000).
+      - key: GRADIO_SERVER_NAME
+        value: "0.0.0.0"
+      - key: GRADIO_SERVER_PORT
+        value: "10000"
+      - key: GEMINI_API_KEY
+        sync: false
+      - key: HF_TOKEN       # a READ-only token is enough
+        sync: false

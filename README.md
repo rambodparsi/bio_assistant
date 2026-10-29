@@ -44,6 +44,7 @@ answer with a short "Sources" line.
 | `config.yaml` | Your settings (name, welcome text, models, search settings) |
 | `prompts/system_prompt.txt` | The assistant's persona and rules |
 | `.env.example` | Names of the secret keys (no values) |
+| `render.yaml` | Render deployment settings (no secrets) |
 
 ## 1. Setup (once)
 
@@ -113,12 +114,34 @@ Edit `prompts/system_prompt.txt` and restart the app. No rebuild needed. To make
 answers stricter or looser, change `similarity_threshold` in `config.yaml`
 (higher = stricter).
 
-## Later: deploying to a Hugging Face Space
+## Deploying to Render (free)
 
-1. Create a new Space at <https://huggingface.co/new-space> → SDK **Gradio**.
-2. Push this repository's code to the Space (the YAML header at the top of this README configures it).
-3. In the Space → **Settings → Variables and secrets**, add two **secrets**:
+Hugging Face now requires a paid PRO plan for Gradio Spaces, so the app runs on
+[Render](https://render.com)'s free web service instead (no credit card, no time limit).
+`render.yaml` already holds all settings; only the two secrets are entered by hand.
+
+1. Make sure this code is on the repository's default branch (`main`).
+2. Create a **read-only** Hugging Face token at <https://huggingface.co/settings/tokens>
+   (the app only needs to download the index).
+3. Sign up at <https://dashboard.render.com> with **GitHub**.
+4. **New + → Blueprint** → connect and pick the `bio_assistant` repository → **Apply**.
+5. When asked, paste the two secrets:
    - `GEMINI_API_KEY`
-   - `HF_TOKEN` — a **read-only** token is enough here
-4. On startup the app downloads the index from your private Dataset.
-5. Embed it on your website with an `<iframe>` pointing to `https://<username>-<space-name>.hf.space`.
+   - `HF_TOKEN` — the read-only token from step 2
+6. Wait for the first deploy (a few minutes). The app is then at
+   `https://bio-assistant-XXXX.onrender.com` (shown at the top of the service page).
+   On startup it downloads the index from your private Dataset.
+7. Embed it on your website:
+
+   ```html
+   <iframe src="https://bio-assistant-XXXX.onrender.com" width="100%" height="700" style="border:0"></iframe>
+   ```
+
+Good to know:
+
+- The free service **sleeps after 15 minutes without visitors**; the next visitor waits
+  about 30–60 seconds while it wakes up.
+- Every push to `main` redeploys automatically.
+- After `python build_index.py` + `python upload_data.py`, use **Manual Deploy → Restart
+  service** on Render so the app downloads the new index.
+- To change a key later: service → **Environment**.
