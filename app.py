@@ -80,7 +80,7 @@ def respond(message, history):
         return friendly_error(error)
 
     answer = result["answer"]
-    if result["sources"]:
+    if config.get("show_sources", False) and result["sources"]:
         answer += SOURCES_MARKER + "; ".join(result["sources"]) + "</sub>"
     return answer
 
