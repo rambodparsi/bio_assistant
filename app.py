@@ -102,8 +102,8 @@ footer { display: none !important; }
 demo = gr.ChatInterface(
     fn=respond,
     title=config["assistant_name"],
-    chatbot=gr.Chatbot(placeholder=config["welcome_message"], show_label=False, scale=1, min_height=200),
-    examples=config["example_questions"],
+    chatbot=gr.Chatbot(placeholder=config.get("welcome_message") or None, show_label=False, scale=1, min_height=200),
+    examples=config.get("example_questions") or None,
     cache_examples=False,     # don't call the API at startup
     flagging_mode="never",
     save_history=False,
