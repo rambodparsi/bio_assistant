@@ -1,0 +1,30 @@
+# =====================================================================
+# PRIVACY: everything below must NEVER reach the public GitHub repo.
+# =====================================================================
+
+# Secrets (API keys). Only the empty template .env.example is committed.
+.env
+.env.*
+!.env.example
+
+# Your private documents and the generated index.
+# These live only on your computer and in the PRIVATE Hugging Face Dataset.
+data/
+index/
+*.npy
+*.npz
+
+# Hugging Face download cache (created by download_data.py)
+.cache/
+.huggingface/
+
+# Python / tools
+.venv/
+venv/
+__pycache__/
+*.pyc
+.gradio/
+flagged/
+.ipynb_checkpoints/
+.DS_Store
+Thumbs.db
