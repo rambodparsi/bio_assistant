@@ -6,22 +6,22 @@
 # =====================================================================
 
 # ---------- About you ----------
-owner_full_name: "[YOUR FULL NAME]"            # e.g. "Jane Doe"
-owner_first_name: "[YOUR FIRST NAME]"          # e.g. "Jane" - used as "Jane has worked on..."
-owner_title_or_field: "[YOUR TITLE OR FIELD]"  # e.g. "PhD researcher in computational biology"
+owner_full_name: "Rambod"            # e.g. "Jane Doe"
+owner_first_name: "Rambod"          # e.g. "Jane" - used as "Jane has worked on..."
+owner_title_or_field: "Researcher/AI-assisted Software Engineering"  # e.g. "PhD researcher in computational biology"
 
 # ---------- The chat window ----------
 assistant_name: "Research Assistant"           # shown as the page title
 
 # First message visitors see. Markdown is allowed.
-welcome_message: "[WELCOME MESSAGE, e.g. Hello! I can answer questions about Jane's research, education and projects.]"
+welcome_message: "Welcome! I am Rambod's website AI assistant.\n\nI am here to answer your questions about his work, research, background, or personal interests. Feel free to ask whatever you would like to know!"
 
 # 3-4 clickable example questions shown under the chat box.
 example_questions:
-  - "[EXAMPLE QUESTION 1, e.g. What is Jane's educational background?]"
-  - "[EXAMPLE QUESTION 2, e.g. What are Jane's main research topics?]"
-  - "[EXAMPLE QUESTION 3, e.g. What is Jane working on now?]"
-  - "[EXAMPLE QUESTION 4, e.g. What are Jane's personal interests?]"
+  - "What is Rambod's educational background?"
+  - "What are Rambod's main research topics?"
+  - "What is Rambod working on now?"
+  - "What are Rambod's personal interests?"
 
 # Reply used when no document matches the question well enough
 # (the model is not even called in that case). {owner_first_name} is filled in automatically.
@@ -37,7 +37,7 @@ use_task_types: true          # use RETRIEVAL_DOCUMENT / RETRIEVAL_QUERY embeddi
 
 # ---------- Private Hugging Face Dataset ----------
 # Where your documents and index are stored (PRIVATE). Format: username/dataset-name
-hf_dataset_repo: "Rambodparsi/[DATASET-NAME]"   # e.g. "Rambodparsi/bio-assistant-data"
+hf_dataset_repo: "Rambodparsi/bio-assistant-data"   # e.g. "Rambodparsi/bio-assistant-data"
 
 # ---------- Retrieval & answering ----------
 chunk_size: 1200            # max characters per chunk (~200 words)
