@@ -87,15 +87,29 @@ def respond(message, history):
 
 ensure_index()
 
+# Fill the whole window (so the chat fits the box it is embedded in on the website),
+# with small even padding, no footer, and card colors that suit the website (light / dark).
+CSS = """
+.gradio-container { max-width: 100% !important; padding: 16px !important; margin: 0 !important; }
+.gradio-container .main.fillable { padding: 0 !important; }
+.gradio-container h1 { margin: 0 0 8px !important; font-size: 20px !important; }
+body, gradio-app, .gradio-container { background: #f1efec !important; }
+.dark body, .dark gradio-app, .dark .gradio-container { background: #252423 !important; }
+.gradio-container .placeholder { padding: 0 16px !important; }
+footer { display: none !important; }
+"""
+
 demo = gr.ChatInterface(
     fn=respond,
     title=config["assistant_name"],
-    chatbot=gr.Chatbot(placeholder=config["welcome_message"], height=520),
+    chatbot=gr.Chatbot(placeholder=config["welcome_message"], show_label=False, scale=1, min_height=200),
     examples=config["example_questions"],
     cache_examples=False,     # don't call the API at startup
     flagging_mode="never",
     save_history=False,
+    fill_height=True,
+    fill_width=True,
 )
 
 if __name__ == "__main__":
-    demo.launch()
+    demo.launch(css=CSS, footer_links=[])
