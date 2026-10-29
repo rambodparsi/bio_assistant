@@ -30,7 +30,7 @@ no_answer_message: "I'm sorry, I don't have access to that information. This ass
 # ---------- Google Gemini models ----------
 # Checked against the google-genai SDK (v2.33.0) and Google's model listings, Oct 2026.
 # If Google retires a model, change the name here - no code changes needed.
-chat_model: "gemini-3.8-flash"
+chat_model: "gemini-3.5-flash-lite"   # cheap + fast; e.g. "gemini-3.8-flash" for higher quality
 embedding_model: "gemini-embedding-2"
 embedding_dimensions: 768     # smaller = smaller index; 768 is plenty for a personal site
 use_task_types: true          # use RETRIEVAL_DOCUMENT / RETRIEVAL_QUERY embedding task types
