@@ -15,12 +15,12 @@ short_description: Answers questions about my background and research.
 
 A small chatbot that answers visitors' questions about me and my work, using **only**
 my own documents (CV, papers, bio). It uses Google Gemini for search ("embeddings")
-and answers, and runs as a Gradio app on a Hugging Face Space.
+and answers, and runs as a Gradio app on a free Render web service.
 
 > **Privacy:** my documents, the search index and all API keys are **never** in this
 > GitHub repository. Documents and the index live only on my computer and in a
 > **private** Hugging Face Dataset. Keys live in a local `.env` file (git-ignored) and
-> in Hugging Face Space secrets.
+> in Render's environment settings.
 
 ## How it works (in one paragraph)
 
@@ -29,7 +29,8 @@ turns each one into an embedding. When a visitor asks a question, `rag.py` finds
 most similar chunks; if none is similar enough, it politely declines without calling
 the model. Otherwise it sends those excerpts (labeled e.g. "CV" or "Paper — <title>")
 and the question to Gemini with the rules in `prompts/system_prompt.txt`, and shows the
-answer with a short "Sources" line.
+short answer (without citations; set `show_sources: true` in `config.yaml` to add a
+"Sources" line).
 
 ## Files
 
