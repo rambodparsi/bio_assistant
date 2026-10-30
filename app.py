@@ -6,6 +6,10 @@ Run locally:
 then open http://127.0.0.1:7860 in your browser.
 """
 
+import base64
+import html
+import mimetypes
+
 import gradio as gr
 from google.genai import errors
 
@@ -98,30 +102,44 @@ CSS = """
 .gradio-container .column, .gradio-container .block.flex, .gradio-container .wrapper { min-height: 0 !important; }
 .gradio-container, .gradio-container * {
   font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Inter, Helvetica, Arial, sans-serif !important; }
-.gradio-container h1 { margin: 2px 0 4px !important; font-size: 19px !important; font-weight: 600 !important;
-  letter-spacing: -.01em; line-height: 1.3 !important; }
-/* Description under the title: centered, smaller and softer */
-.gradio-container .block.hide-container.auto-margin .prose p {
-  text-align: center; font-size: 14px; line-height: 1.5; color: #6f6b66; margin: 0 8px 6px !important; }
-.dark .gradio-container .block.hide-container.auto-margin .prose p { color: #a29e98; }
+/* Header: icon left, title + description beside it, left-aligned */
+.gradio-container .html-container:has(.chat-header) { padding: 0 0 4px !important; }
+.chat-header { display: flex; align-items: flex-start; gap: 14px; margin: 0 0 8px; }
+.chat-header img { width: 56px; height: 56px; border-radius: 50%; flex-shrink: 0; margin-top: 2px; }
+.chat-header .title { font-size: 18px; font-weight: 600; letter-spacing: -.01em; line-height: 1.3; }
+.chat-header .desc { margin-top: 3px; font-size: 14px; line-height: 1.45; color: #6f6b66; }
+.dark .chat-header .desc { color: #a29e98; }
 body, gradio-app, .gradio-container { background: #f1efec !important; }
 .dark body, .dark gradio-app, .dark .gradio-container { background: #252423 !important; }
 .gradio-container .placeholder { padding: 0 16px !important; }
 footer { display: none !important; }
 """
 
-demo = gr.ChatInterface(
-    fn=respond,
-    title=config["assistant_name"],
-    description=config.get("assistant_description") or None,
-    chatbot=gr.Chatbot(placeholder=config.get("welcome_message") or None, show_label=False, scale=1, min_height=200),
-    examples=config.get("example_questions") or None,
-    cache_examples=False,     # don't call the API at startup
-    flagging_mode="never",
-    save_history=False,
-    fill_height=True,
-    fill_width=True,
-)
+def header_html():
+    """Icon on the left, title and description on the right (from config.yaml)."""
+    icon = ""
+    icon_path = rag.ROOT / (config.get("assistant_icon") or "")
+    if config.get("assistant_icon") and icon_path.is_file():
+        mime = mimetypes.guess_type(icon_path.name)[0] or "image/png"
+        data = base64.b64encode(icon_path.read_bytes()).decode()
+        icon = f'<img src="data:{mime};base64,{data}" alt="">'
+    desc = config.get("assistant_description") or ""
+    desc = f'<div class="desc">{html.escape(desc)}</div>' if desc else ""
+    return (f'<div class="chat-header">{icon}<div><div class="title">'
+            f'{html.escape(config["assistant_name"])}</div>{desc}</div></div>')
+
+
+with gr.Blocks(title=config["assistant_name"], fill_height=True, fill_width=True) as demo:
+    gr.HTML(header_html())
+    gr.ChatInterface(
+        fn=respond,
+        chatbot=gr.Chatbot(placeholder=config.get("welcome_message") or None, show_label=False, scale=1, min_height=200),
+        examples=config.get("example_questions") or None,
+        cache_examples=False,     # don't call the API at startup
+        flagging_mode="never",
+        save_history=False,
+        fill_height=True,
+    )
 
 if __name__ == "__main__":
     demo.launch(css=CSS, footer_links=[])
