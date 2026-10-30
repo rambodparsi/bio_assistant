@@ -11,9 +11,10 @@ owner_first_name: "Rambod"          # e.g. "Jane" - used as "Jane has worked on.
 owner_title_or_field: "Researcher/AI-assisted Software Engineering"  # e.g. "PhD researcher in computational biology"
 
 # ---------- The chat window ----------
-# Title (first line, bold) and description (second line, smaller) at the top of the chat.
+# Header at the top of the chat: icon on the left, title (bold) and description beside it.
 # The title is also the browser tab title. Leave the description "" to hide it.
-assistant_name: "Welcome to Rambod's Website!"
+assistant_name: "Welcome, my name is Dana."
+assistant_icon: "assets/dana.png"   # square image (PNG/JPG); shown as a circle. "" = no icon
 assistant_description: "I'm an AI assistant to answer your questions on Rambod's background. Feel free to ask about his research, professional experience, or hobbies!"
 
 # First message visitors see. Markdown is allowed. Turned off ("") - to show it again, use e.g.:
