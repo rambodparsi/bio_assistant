@@ -92,7 +92,18 @@ ensure_index()
 CSS = """
 .gradio-container { max-width: 100% !important; padding: 16px !important; margin: 0 !important; }
 .gradio-container .main.fillable { padding: 0 !important; }
-.gradio-container h1 { margin: 0 0 8px !important; font-size: 20px !important; }
+/* Never taller than the window: the chat area shrinks to whatever space is left */
+.gradio-container { height: 100vh !important; min-height: 0 !important; overflow: hidden; }
+.gradio-container .main, .gradio-container .wrap, .gradio-container main.contain,
+.gradio-container .column, .gradio-container .block.flex, .gradio-container .wrapper { min-height: 0 !important; }
+.gradio-container, .gradio-container * {
+  font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Inter, Helvetica, Arial, sans-serif !important; }
+.gradio-container h1 { margin: 2px 0 4px !important; font-size: 19px !important; font-weight: 600 !important;
+  letter-spacing: -.01em; line-height: 1.3 !important; }
+/* Description under the title: centered, smaller and softer */
+.gradio-container .block.hide-container.auto-margin .prose p {
+  text-align: center; font-size: 14px; line-height: 1.5; color: #6f6b66; margin: 0 8px 6px !important; }
+.dark .gradio-container .block.hide-container.auto-margin .prose p { color: #a29e98; }
 body, gradio-app, .gradio-container { background: #f1efec !important; }
 .dark body, .dark gradio-app, .dark .gradio-container { background: #252423 !important; }
 .gradio-container .placeholder { padding: 0 16px !important; }
@@ -102,6 +113,7 @@ footer { display: none !important; }
 demo = gr.ChatInterface(
     fn=respond,
     title=config["assistant_name"],
+    description=config.get("assistant_description") or None,
     chatbot=gr.Chatbot(placeholder=config.get("welcome_message") or None, show_label=False, scale=1, min_height=200),
     examples=config.get("example_questions") or None,
     cache_examples=False,     # don't call the API at startup
