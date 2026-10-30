@@ -30,7 +30,7 @@ example_questions: []
 
 # Reply used when no document matches the question well enough
 # (the model is not even called in that case). {owner_first_name} is filled in automatically.
-no_answer_message: "I'm sorry, I don't have access to that information. This assistant is intended only to answer questions about {owner_first_name}'s background and work."
+no_answer_message: "I don't have verified information on that, so I'd rather not guess. I'm Dana, {owner_first_name}'s AI assistant - I can tell you about his research, publications, professional background, or personal interests."
 
 # ---------- Google Gemini models ----------
 # Checked against the google-genai SDK (v2.33.0) and Google's model listings, Oct 2026.
